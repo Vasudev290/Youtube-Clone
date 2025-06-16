@@ -11,29 +11,30 @@ import {
   Gamepad2, 
   Film, 
 } from 'lucide-react'; 
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
   const isMenuOpen = useSelector((state) => state.app.isMenuOpen);
   const mainMenuItems = [
-    { name: 'Home', icon: Home },
-    { name: 'Shorts', icon: Compass }, 
-    { name: 'Videos', icon: Video },
-    { name: 'Live', icon: PlaySquare },
+    { name: 'Home', icon: Home, path: "/"},
+    { name: 'Shorts', icon: Compass, path: "/shorts" }, 
+    { name: 'Videos', icon: Video, path: "/videos" },
+    { name: 'Live', icon: PlaySquare, path: "/live" },
   ];
 
   const subscriptionItems = [
-    { name: 'Music', icon: Music },
-    { name: 'Sports', icon: Bike }, 
-    { name: 'Gaming', icon: Gamepad2 },
-    { name: 'Movies', icon: Film },
+    { name: 'Music', icon: Music, path: "/music" },
+    { name: 'Sports', icon: Bike, path: "sports" }, 
+    { name: 'Gaming', icon: Gamepad2, path: "/gaming" },
+    { name: 'Movies', icon: Film, path: "/movies" },
   ];
 
   const watchLaterItems = [
-    { name: 'Watch Later', icon: Clock },
-    { name: 'Music', icon: Music },
-    { name: 'Sports', icon: Bike },
-    { name: 'Gaming', icon: Gamepad2 },
-    { name: 'Movies', icon: Film },
+    { name: 'Watch Later', icon: Clock, path: "/watch-later" },
+    { name: 'Music', icon: Music, path: "/music" },
+    { name: 'Sports', icon: Bike, path: "/sports" },
+    { name: 'Gaming', icon: Gamepad2, path:"/gaming" },
+    { name: 'Movies', icon: Film, path: "movies" },
   ];
 
   if (!isMenuOpen) return null;
@@ -46,8 +47,10 @@ const SideBar = () => {
             key={item.name}
             className="flex items-center py-2 px-3 rounded-lg hover:bg-gray-100 cursor-pointer text-gray-800 text-base md:text-lg transition-colors duration-200"
           >
-            <item.icon className="mr-4 h-5 w-5 md:h-6 md:w-6 text-gray-600" />
-            <span>{item.name}</span>
+            <Link to={item.path} className="flex items-center w-full cursor-pointer">
+              <item.icon className="mr-4 h-5 w-5 md:h-6 md:w-6 text-gray-600" />
+              <span>{item.name}</span>
+            </Link>
           </li>
         ))}
       </ul>

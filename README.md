@@ -1,71 +1,144 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Planning Components
+ -Header
+ -Body
+ -SideBar
+ -Button
+   -ButtonList
+ -MainContainer (for video)
+   -Video Container
+      -Video Card
 
-## Available Scripts
+# ToggleFunction
+ -Redux toolkit (for state management
+ 
+# fetch API Data from (Youtube api)
 
-In the project directory, you can run:
+# Step-by-Step Guide: Creating and Restricting a Google API Key
+Follow these instructions carefully to create a new API key and secure it for use in your web application.
 
-### `npm start`
+# Part 1: Accessing Google Cloud Console and Project Setup
+Go to Google Cloud Console:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open your web browser and navigate to https://console.cloud.google.com/.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Sign in with your Google account.
 
-### `npm test`
+Select or Create a Project:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In the top navigation bar, click on the project dropdown (it usually shows "My First Project" or the name of your last accessed project).
 
-### `npm run build`
+Click "New Project" to create a new one, give it a descriptive name (e.g., "YouTube Clone App"), and click "Create".
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+If you already have a project you want to use, select it from the list.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Enable Billing (if not already enabled):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+While not strictly for API key creation, many Google APIs (including YouTube Data API v3) require a billing account. You'll often get free credits to start, but billing must be enabled.
 
-### `npm run eject`
+In the left-hand navigation menu, go to "Billing".
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Follow the prompts to link a billing account if you haven't already.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Part 2: Enabling the YouTube Data API v3
+Before you can use an API key, you need to enable the specific API you want to access for your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Navigate to API Library:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+In the left-hand navigation menu, go to "APIs & Services" > "Library".
 
-## Learn More
+Search for and Enable the API:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+In the search bar, type "YouTube Data API v3" and press Enter.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Click on the "YouTube Data API v3" result.
 
-### Code Splitting
+On the API details page, click the "ENABLE" button.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Wait a few moments for the API to be enabled for your project.
 
-### Analyzing the Bundle Size
+# Part 3: Creating Your API Key
+Now that the YouTube Data API v3 is enabled, you can create the API key.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Go to Credentials:
 
-### Making a Progressive Web App
+In the left-hand navigation menu, go to "APIs & Services" > "Credentials".
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Create API Key:
 
-### Advanced Configuration
+Click on the "+ CREATE CREDENTIALS" button at the top.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Select "API key" from the dropdown menu.
 
-### Deployment
+A dialog box will appear with your newly generated API key. Copy this key immediately!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Important: This is your API key. It's a long string of alphanumeric characters. Click "SHOW KEY" to reveal it if it's masked, and copy it.
 
-### `npm run build` fails to minify
+Close the Dialog:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-"# Youtube-Clone" 
+Click "Close" in the dialog box. Your new API key will now be listed on the "Credentials" page under "API Keys".
+
+# Part 4: Restricting Your API Key (Crucial for Security!)
+This is the most important part for securing your API key and preventing unauthorized usage. Leaving an API key "unrestricted" means anyone who finds it can use it, potentially incurring unexpected costs or hitting your quota limits.
+
+Edit the API Key:
+
+On the "Credentials" page, locate the API key you just created.
+
+Click on the pencil icon (Edit API key) next to its name.
+
+Rename the API Key (Optional but Recommended):
+
+Give your API key a descriptive name (e.g., "YouTube Web App Key") so you know what it's for.
+
+Set "Application restrictions": (From Unrestricted to Restricted)
+
+Under the "Key restrictions" section, you'll see "Application restrictions". By default, it might be set to "None" (unrestricted).
+
+Select "HTTP referrers (web sites)". This is the correct restriction type for a web application running in a browser.
+
+In the "Website restrictions" section that appears:
+
+Click "ADD AN ITEM".
+
+For local development (if still needed):
+
+http://localhost:*
+
+http://localhost:3000/* (or the specific port your React app runs on, e.g., 3001, 5173, etc.)
+
+http://127.0.0.1:*
+
+For your deployed Vercel application:
+
+Click "ADD AN ITEM" again.
+
+Add your exact Vercel deployment URL with a wildcard: https://youtube-clone-indol-five-82.vercel.app/*
+
+It's good practice to also add the wildcard for subdomains if Vercel uses them or if you have custom domains: https://*.vercel.app/* (though https://youtube-clone-indol-five-82.vercel.app/* is the most specific and usually sufficient).
+
+Click "Done" after adding each referrer.
+
+Set "API restrictions":
+
+Under the "API restrictions" section, it might initially say "Don't restrict key" (unrestricted access to all APIs).
+
+Select "Restrict key".
+
+Click on the "Select APIs" dropdown.
+
+Scroll through the list or use the search bar to find and select "YouTube Data API v3".
+
+Click "OK".
+
+Save Changes:
+
+After setting both the application restrictions (HTTP referrers) and API restrictions (YouTube Data API v3), make sure to click the "SAVE" button at the bottom of the page.
+
+# React Routing
+ -crateBrowseingRouter
+   -to config the router component
+
+
+# Watch Component
+-Dynamic Routing the Page (Reload)
