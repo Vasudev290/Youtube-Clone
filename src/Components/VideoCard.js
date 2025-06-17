@@ -1,6 +1,6 @@
 const VideoCard = (props) => {
   const { info } = props;
-  console.log("VideoCard received info:", info);
+  //console.log("VideoCard received info:", info);
   if (!info || !info.snippet) {
     return (
       <div className="bg-gray-100 p-4 rounded-lg shadow-sm h-64 flex items-center justify-center text-gray-500">

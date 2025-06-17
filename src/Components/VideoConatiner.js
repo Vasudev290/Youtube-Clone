@@ -16,7 +16,7 @@ const VideoConatiner = () => {
     try {
       const data = await fetch(YOUTUBE_VIDEO_API_URL);
       const jsonData = await data.json();
-      console.log("YouTube API Response:", jsonData);
+      //console.log("YouTube API Response:", jsonData);
 
       if (jsonData && jsonData.items && Array.isArray(jsonData.items)) {
         setVideos(jsonData.items);
@@ -43,10 +43,10 @@ const VideoConatiner = () => {
     : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5";
   return (
     // Apply dynamic grid classes and consistent padding
-    <div className={`p-4 gap-10 grid ${gridClasses}`}>
+    <div className={`p-4 gap-2 grid ${gridClasses}`}>
       {videos.map((video) => (
-        <Link to={"/watch?v=" + video.id}>
-        <VideoCard key={video.id.videoId || video.id} info={video} />
+        <Link key={video.id.videoId || video.id} to={"/watch?v=" + video.id}>
+          <VideoCard info={video} />
         </Link>
       ))}
     </div>
