@@ -1,12 +1,16 @@
-import { Menu, UserRound, Search} from "lucide-react";
-import { useDispatch } from "react-redux";
+import { Menu, UserRound, Search } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../Slices/appSlice";
 import { useEffect, useState } from "react";
 import { YOUTUBE_SEARCH_API_URL } from "../utils/constents";
+import { chacheResults } from "../Slices/searchSlice";
 
 const Header = () => {
   //Dispatch Hook
   const dispatch = useDispatch();
+
+  //Selector
+  const searchCache = useSelector((state) => state.search);
 
   //local state variable
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,7 +23,11 @@ const Header = () => {
     // but if the diff b/w 2 api calls is < 200ms
     // decline the api call
     const timer = setTimeout(() => {
-      getSearchSuggestions();
+      if (searchCache[searchQuery]) {
+        setSuggestion(searchCache[searchQuery]);
+      } else {
+        getSearchSuggestions();
+      }
     }, 200);
     return () => {
       clearTimeout(timer);
@@ -36,9 +44,16 @@ const Header = () => {
     const data = await fetch(YOUTUBE_SEARCH_API_URL + searchQuery);
     const jsonData = await data.json();
     setSuggestion(jsonData[1]);
+
+    //update cache
+    dispatch(
+      chacheResults({
+        [searchQuery]: jsonData[1],
+      })
+    );
   };
 
- return (
+  return (
     <div className="flex items-center justify-between p-4 px-6 m-2 bg-white rounded-lg shadow-md relative">
       {/* Left: Logo + Menu */}
       <div className="flex items-center space-x-4">

@@ -40,7 +40,7 @@ const SideBar = () => {
   if (!isMenuOpen) return null;
 
   return (
-    <div className="p-4 md:p-5 shadow-lg bg-white overflow-y-auto h-full w-56 md:w-64 lg:w-72 flex-shrink-0 rounded-r-lg max-w-xs sm:max-w-sm md:max-w-md">
+    <div className="p-2 md:p-5 shadow-lg bg-white overflow-y-auto h-full w-56 md:w-48 lg:w-72 flex-shrink-0 rounded-r-lg max-w-xs sm:max-w-sm md:max-w-md">
       <ul className="mb-6">
         {mainMenuItems.map((item) => (
           <li
