@@ -203,3 +203,9 @@ Key Press -ip
 SetTimeout(200) - declines
 
 SetTimeout(200) - make an API call
+
+# Cache functionailty in Redux Level
+ -Searching data in input search bar
+
+# Comments 
+ -we added end level neasted comments  
