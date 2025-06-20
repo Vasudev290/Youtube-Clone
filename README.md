@@ -11,7 +11,7 @@
 
 # ToggleFunction
 
--Redux toolkit (for state management
+-Redux toolkit (for state management)
 
 # fetch API Data from (Youtube api)
 
