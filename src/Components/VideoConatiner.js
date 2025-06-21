@@ -39,11 +39,11 @@ const VideoConatiner = () => {
   }
 
   const gridClasses = isMenuOpen
-    ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4"
+    ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
     : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5";
   return (
     // Apply dynamic grid classes and consistent padding
-    <div className={`p-4 gap-2 grid ${gridClasses}`}>
+    <div className={`p-4 gap-4 grid ${gridClasses}`}>
       {videos.map((video) => (
         <Link key={video.id.videoId || video.id} to={"/watch?v=" + video.id}>
           <VideoCard info={video} />

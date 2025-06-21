@@ -5,7 +5,7 @@ const buttonListSuggest = ["All", "Gaming", "Songs", "Live", "Soccer", "Cricket"
 
 const ButtonList = () => {
   return (
-    <div className='flex overflow-x-auto space-x-3 p-2 no-scrollbar'> 
+    <div className='flex overflow-x-auto space-x-3 p-2 scrollbar-hide'> 
       {
         buttonListSuggest.map((list, index) => (
           <Button key={index} name={list} /> 

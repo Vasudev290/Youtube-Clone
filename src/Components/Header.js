@@ -1,4 +1,4 @@
-import { Menu, UserRound, Search } from "lucide-react";
+import { Menu, UserRound, Search, Plus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../Slices/appSlice";
 import { useEffect, useState } from "react";
@@ -6,96 +6,124 @@ import { YOUTUBE_SEARCH_API_URL } from "../utils/constents";
 import { chacheResults } from "../Slices/searchSlice";
 
 const Header = () => {
-  //Dispatch Hook
   const dispatch = useDispatch();
-
-  //Selector
   const searchCache = useSelector((state) => state.search);
 
-  //local state variable
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestion, setSuggestion] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
 
-  //useEffect for api call
   useEffect(() => {
-    // Make an api call after ever key press
-    // but if the diff b/w 2 api calls is < 200ms
-    // decline the api call
     const timer = setTimeout(() => {
+      if (!searchQuery.trim()) {
+        setSuggestion([]);
+        return;
+      }
+
       if (searchCache[searchQuery]) {
         setSuggestion(searchCache[searchQuery]);
       } else {
         getSearchSuggestions();
       }
     }, 200);
-    return () => {
-      clearTimeout(timer);
-    };
+
+    return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  //HAMBARGAR MENU TOGGLE
-  const toggleMenuHandler = () => {
-    dispatch(toggleMenu());
-  };
-
-  //Search Suggestions
   const getSearchSuggestions = async () => {
     const data = await fetch(YOUTUBE_SEARCH_API_URL + searchQuery);
     const jsonData = await data.json();
     setSuggestion(jsonData[1]);
+    dispatch(chacheResults({ [searchQuery]: jsonData[1] }));
+  };
 
-    //update cache
-    dispatch(
-      chacheResults({
-        [searchQuery]: jsonData[1],
-      })
-    );
+  const toggleMenuHandler = () => {
+    dispatch(toggleMenu());
   };
 
   return (
-    <div className="flex items-center justify-between p-4 px-6 m-2 bg-white rounded-lg shadow-md relative">
-      {/* Left: Logo + Menu */}
-      <div className="flex items-center space-x-4">
+    <div className="w-full px-4 py-2 shadow-md rounded-lg flex items-center justify-between gap-4">
+      {/* Left Section */}
+      <div className="flex items-center gap-2 flex-shrink-0">
         <Menu
-          className="h-6 w-6 cursor-pointer text-gray-700 hover:text-gray-900"
+          className="h-5 w-5 sm:h-6 sm:w-6 cursor-pointer text-gray-700"
           onClick={toggleMenuHandler}
         />
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Logo_of_YouTube_%282015-2017%29.svg/2560px-Logo_of_YouTube_%282015-2017%29.svg.png"
-          alt="youtube-logo"
-          className="h-6 sm:h-7"
+          src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png"
+          alt="YouTube"
+          className="h-5 sm:h-6"
         />
       </div>
 
-      {/* Middle: Search Input */}
-      <div className="flex-grow max-w-xl mx-4 relative">
-        <div className="flex">
+      {/* Mobile Search Box */}
+      {showMobileSearch && (
+        <div className="flex-grow sm:hidden relative">
+          <div className="flex w-full">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+              className="w-full p-2 border border-gray-300 rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+            <button className="p-2 border border-gray-300 rounded-r-full bg-gray-100 hover:bg-gray-200">
+              <Search className="h-4 w-4 text-gray-600" />
+            </button>
+          </div>
+
+          {/* 👇 Keep this box inside the same relative div */}
+          {showSuggestions && suggestion.length > 0 && (
+            <div className="absolute left-0 right-0 top-full mt-1 bg-white shadow-lg rounded-md border z-50 max-h-64 overflow-y-auto">
+              <ul>
+                {suggestion.map((sugg, idx) => (
+                  <li
+                    key={idx}
+                    onMouseDown={() => setSearchQuery(sugg)}
+                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer gap-2 text-sm"
+                  >
+                    <Search className="h-4 w-4 text-gray-500" />
+                    {sugg}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Desktop Search (Always visible) */}
+      <div className="hidden sm:flex flex-grow max-w-xl mx-auto relative">
+        <div className="flex w-full">
           <input
             type="text"
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setShowSuggestions(true)}
-            onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
-            className="flex-grow p-2 border border-gray-300 rounded-l-full focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm sm:text-base w-full"
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
+            className="w-full p-2 border border-gray-300 rounded-l-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
           />
-          <button className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-r-full hover:bg-gray-200 flex items-center justify-center">
+          <button className="p-2 border border-gray-300 rounded-r-full bg-gray-100 hover:bg-gray-200">
             <Search className="h-4 w-4 text-gray-600" />
           </button>
         </div>
 
-        {/* Suggestions Dropdown */}
+        {/* 👇 Inside same relative block */}
         {showSuggestions && suggestion.length > 0 && (
-          <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+          <div className="absolute left-0 right-0 top-full mt-1 bg-white shadow-lg rounded-md border z-50 max-h-64 overflow-y-auto">
             <ul>
               {suggestion.map((sugg, idx) => (
                 <li
                   key={idx}
-                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm gap-3"
                   onMouseDown={() => setSearchQuery(sugg)}
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer gap-2 text-sm"
                 >
-                  <Search className="h-4 w-4 text-gray-600" /> {sugg}
+                  <Search className="h-4 w-4 text-gray-500" />
+                  {sugg}
                 </li>
               ))}
             </ul>
@@ -103,9 +131,24 @@ const Header = () => {
         )}
       </div>
 
-      {/* Right: User Icon */}
-      <div className="flex items-center">
-        <UserRound className="h-7 w-7 cursor-pointer text-blue-600 hover:text-blue-700" />
+      {/* Right Section */}
+      <div className="flex items-center gap-4 flex-shrink-0">
+        {/* Show search icon only on mobile when search bar is not visible */}
+        {!showMobileSearch && (
+          <Search
+            className="h-5 w-5 cursor-pointer text-gray-700 sm:hidden"
+            onClick={() => setShowMobileSearch(true)}
+          />
+        )}
+
+        {/* Create Button */}
+        <button className="hidden sm:flex items-center gap-1 px-3 py-1 rounded-full border border-gray-300 hover:bg-gray-100 text-sm font-medium">
+          <Plus className="h-4 w-4" />
+          Create
+        </button>
+
+        {/* User Icon */}
+        <UserRound className="h-6 w-6 text-blue-600 hover:text-blue-700 cursor-pointer" />
       </div>
     </div>
   );

@@ -218,3 +218,6 @@ SetTimeout(200) - make an API call
 
 # Demo Component
  -We learn the useMemo, useCallBack, useRef Hook
+
+
+# Full Responsive for all the devices

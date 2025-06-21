@@ -26,7 +26,7 @@ const VideoCard = (props) => {
   };
 
   return (
-    <div className="p-1 m-2 shadow-lg rounded-lg transform transition-transform hover:scale-105 duration-300 cursor-pointer min-w-full">
+    <div className="p-1 m-2 shadow-lg rounded-lg transform transition-transform hover:scale-105 duration-300 cursor-pointer">
       <img
         className="rounded-lg w-full h-full object-cover"
         src={thumbnailUrl}
@@ -38,9 +38,9 @@ const VideoCard = (props) => {
         }}
       />
       <ul className="py-2">
-        <li className="font-bold text-base line-clamp-2 mb-1">{title}</li>
-        <li className="text-gray-600 text-sm">{channelTitle}</li>
-        <li className="text-gray-600 text-sm">
+        <li className="font-bold text-sm md:text-base line-clamp-2 mb-1">{title}</li>
+        <li className="text-gray-600 text-xs md:text-sm">{channelTitle}</li>
+        <li className="text-gray-600 text-xs md:text-sm">
           {statistics?.viewCount
             ? formatViewCount(statistics.viewCount)
             : "N/A views"}

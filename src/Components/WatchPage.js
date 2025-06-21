@@ -19,10 +19,10 @@ const WatchPage = () => {
   }, []);
   return (
     <div className="flex flex-col w-full">
-      <div className="px-5 flex w-full">
-        <div>
+      <div className="px-5 flex flex-col md:flex-row w-full">
+        <div className="flex-grow">
         <iframe
-          width="800"
+          width="100%"
           height="450"
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
           title="YouTube video player"
@@ -34,7 +34,7 @@ const WatchPage = () => {
           style={{ maxWidth: "90vw", aspectRatio: "14 / 8" }}
         ></iframe>
         </div>
-        <div className="w-full">
+        <div className="w-full md:w-1/3">
           <LiveChat/>
         </div>
       </div>
