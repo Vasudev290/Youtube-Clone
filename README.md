@@ -214,3 +214,7 @@ SetTimeout(200) - make an API call
 # Live Chat 
  -LiveChat & -LiveMessageChat Componnet
  we create the live chat with using of random names and random messages, emojis also 
+
+
+# Demo Component
+ -We learn the useMemo, useCallBack, useRef Hook

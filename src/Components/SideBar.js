@@ -10,6 +10,7 @@ import {
   Bike, 
   Gamepad2, 
   Film, 
+  NotebookPen
 } from 'lucide-react'; 
 import { Link } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ const SideBar = () => {
   const isMenuOpen = useSelector((state) => state.app.isMenuOpen);
   const mainMenuItems = [
     { name: 'Home', icon: Home, path: "/"},
+    { name: 'Demo', icon: NotebookPen, path: "/demo"},
     { name: 'Shorts', icon: Compass, path: "/shorts" }, 
     { name: 'Videos', icon: Video, path: "/videos" },
     { name: 'Live', icon: PlaySquare, path: "/live" },
